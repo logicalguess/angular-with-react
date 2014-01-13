@@ -75,9 +75,9 @@ and the definition of the <code>ReactCtrl</code> base controller:
         }
     }
 
-## Using React for views and Angular for routing and the rest
+## Using React for views and Angular for routing, etc
 
-The React syntax is a big downside in my opinion, but it can be done:
+The React syntax is a big downside in my opinion, but if we want we can render React components from Angular controllers:
 
     myapp.controller('IndexCtrl', function ($scope, $injector) {
         // converting the plain JavaScript object with presentation/interaction logic into a React component
@@ -96,7 +96,7 @@ The React syntax is a big downside in my opinion, but it can be done:
 
 ## ClojureScript offers a nicer syntax
 
-I've used the [Cloact](http://holmsand.github.io/cloact/) project to create the same component:
+We can use the [Cloact](http://holmsand.github.io/cloact/) project to create the same component:
 
     (def counter (atom 0))
     (defn simple []
