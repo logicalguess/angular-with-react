@@ -10,7 +10,7 @@ Also, showing how to render a React component from an Angular controller.
 The code is based on the simple component in this Tuts+ tutorial:
 [Introduction to the React Framework](http://net.tutsplus.com/tutorials/javascript-ajax/intro-to-the-react-framework/)
 
-Separate the presentation/interaction logic from the rendering. This function does not depend on React, Angular or
+We want to **separate the presentation/interaction logic from the rendering**. This function does not depend on React, Angular or
 any framework, it only make very reasonable assumptions about what traits will be mixed in:
 
     var PlainSimple = function () {
