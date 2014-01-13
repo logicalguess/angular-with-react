@@ -9,10 +9,10 @@ We are also showing how to render a React component from an Angular controller.
 ## Angular Controller/Directive and React component from the same POJO
 
 The code is based on the simple component in this Tuts+ tutorial:
-[Introduction to the React Framework](http://net.tutsplus.com/tutorials/javascript-ajax/intro-to-the-react-framework/)
+[Intro to the React Framework](http://net.tutsplus.com/tutorials/javascript-ajax/intro-to-the-react-framework/)
 
 We want to **separate the presentation/interaction logic from the rendering**. This function does not depend on React, Angular or
-any framework, it only make very reasonable assumptions about what traits will be mixed in:
+any framework, it only makes very reasonable assumptions about what traits will be mixed in:
 
     var PlainSimple = function () {
         return {
