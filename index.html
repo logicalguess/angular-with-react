@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Angular With React</title>
+
+  <style>
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+    .clicker {
+      background: #CCC;
+      border: 2px solid #999;
+      padding: 3px 7px;
+      display: inline-block;
+      border-radius: 3px;
+      box-shadow: 1px 1px 3px #999;
+
+      cursor: pointer;
+    }
+
+    .message {
+      margin-top: 20px;
+    }
+    .count {
+      color: #00D8FF;
+      font-weight: bold;
+      font-size: 24px;
+      text-shadow: 1px 1px 3px #999;
+    }
+  </style>
+
+
+
+</head>
+
+<body>
+
+<h2> React</h2>
+<div id="react"></div>
+
+<h2>Angular</h2>
+<div ng-app="myapp">
+    <script type="text/ng-template" id="/counter.html">
+        <div class="clicker" ng-click="this.handleMouseDown()">Give me the message!</div>
+        <div class="message">Message conveyed <span ref="counter" class="count">{{this.state.count}}</span>
+            time(s)
+        </div>
+    </script>
+
+    <div ng-view></div>
+</div>
+
+
+<h2>React + Angular</h2>
+<div id="both"></div>
+
+<!-- Libraries -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script type='text/javascript' src="http://code.angularjs.org/1.1.4/angular.js"></script>
+<script src="http://fb.me/JSXTransformer-0.8.0.js"></script>
+<script src="http://fb.me/react-0.8.0.js"></script>
+
+
+
+<!-- Application Scripts -->
+
+<script type='text/javascript'>//<![CDATA[
+var PlainSimple = function () {
+    return {
+        getInitialState: function () {
+            return { count: 0 };
+        },
+
+        handleMouseDown: function () {
+            alert('I was told: ' + this.props.message);
+            this.setState({ count: this.state.count + 1});
+        }
+    }
+}
+
+var myapp = angular.module('myapp', []).config(function ($routeProvider) {
+    $routeProvider.when('/index', {
+        templateUrl:'/counter.html',
+        controller: 'IndexCtrl'
+    }).otherwise({
+                redirectTo: '/index'
+            });
+});
+
+function ReactCtrl(base, settings) {
+    return function ($scope) {
+        $.extend(true, $scope, base, settings);
+        $scope.state = $scope.getInitialState();
+        $scope.setState = function (newState) {
+            $.extend($scope.state, newState);
+        }
+    }
+}
+
+myapp.controller('IndexCtrl', function ($scope, $injector) {
+    // settings, could be read from config
+    var settings = {props: {message: 'Keep It Simple'}};
+    // mixing in the React component logic into the controller
+    $injector.invoke(ReactCtrl(PlainSimple(), settings), this, {$scope: $scope});
+
+    // converting the plain JavaScript object with presentation/interaction logic into a React component
+    var Simple = React.createClass($.extend(PlainSimple(), {
+        render: function () {
+            return React.DOM.div({},
+                    React.DOM.div({className: 'clicker', onMouseDown: this.handleMouseDown}, 'Give me the message!'),
+                    React.DOM.div({className: 'message'},
+                    'Message conveyed ', React.DOM.span({className: 'count'}, this.state.count), " time(s)")
+            );
+        }
+    }));
+
+    React.renderComponent(Simple({message: 'Keep It Simple'}), document.getElementById('both'));
+
+});
+//]]>
+</script>
+
+
+<script type="text/jsx">
+    /** @jsx React.DOM */
+// converting the plain JavaScript object with presentation/interaction logic into a React component
+var Simple = React.createClass($.extend(PlainSimple(), {
+
+  render: function(){
+
+    return <div>
+      <div className="clicker" onMouseDown={this.handleMouseDown}>
+        Give me the message!
+      </div>
+      <div className="message">Message conveyed
+        <span ref="counter" className="count">{this.state.count}</span> time(s)</div>
+    </div>
+    ;
+  }
+}));
+
+React.renderComponent(<Simple message="Keep it Simple"/>,
+                  document.getElementById('react'));
+
+</script>
+
+</body>
+</html>
