@@ -1,7 +1,8 @@
 # Angular With React
 
 This project shows how to convert the same plain JavaScript function into an Angular controller/directive and a React component.
-Also, showing how to render a React component from an Angular controller.
+Angular and React are 2 of the leading frameworks that offer solid support for reusing and composing UI components.
+We are also showing how to render a React component from an Angular controller.
 
 ![ ](screen1.png) ![ ](screen2.png)
 
