@@ -63,6 +63,17 @@ For reference, here is the Angular template:
         <div class="message">Message conveyed <span ref="counter" class="count">{{this.state.count}}</span>
             time(s)
         </div>
+and the definition of the <code>ReactCtrl</code> base controller:
+
+    function ReactCtrl(base, settings) {
+        return function ($scope) {
+            $.extend(true, $scope, base, settings);
+            $scope.state = $scope.getInitialState();
+            $scope.setState = function (newState) {
+                $.extend($scope.state, newState);
+            }
+        }
+    }
 
 ## Using React for views and Angular for routing and the rest
 
